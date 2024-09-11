@@ -4,14 +4,26 @@ import { useState } from "react";
 export default function App() {
   const [number, setNumber] = useState(0);
   const [result, setResult] = useState(0);
+  const [reverse, setReverse] = useState(0);
   function handleInput() {
     //please put your logic here
     let number_sanitized = number;
-    let reversed_number_sanitized = number_sanitized
-      .split("")
-      .reverse()
-      .join("");
+    let reversed_number_sanitized = number_sanitized.split("").reverse();
+    let flag = true;
+    reversed_number_sanitized = reversed_number_sanitized.map((e) => {
+      if (flag) {
+        if (e > 0) {
+          flag = false;
+          return e;
+        }
+      } else {
+        return e;
+      }
+    });
+    reversed_number_sanitized = reversed_number_sanitized.join("");
     let difference = reversed_number_sanitized - number_sanitized;
+
+    setReverse(reversed_number_sanitized);
     setResult(Math.abs(difference));
   }
   function handleNumber(e) {
@@ -27,6 +39,7 @@ export default function App() {
         <button onClick={() => handleInput()}>Submit</button>
       </div>
       <div>Result: {result}</div>
+      <div>Reverse: {reverse}</div>
     </div>
   );
 }
